@@ -1,13 +1,31 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { LanguageProvider } from '@/contexts/LanguageContext';
+import { Navbar } from '@/components/Navbar';
+import { Hero } from '@/components/Hero';
+import { PainPoints } from '@/components/PainPoints';
+import { Solutions } from '@/components/Solutions';
+import { AITechnology } from '@/components/AITechnology';
+import { ValueProposition } from '@/components/ValueProposition';
+import { SystemArchitecture } from '@/components/SystemArchitecture';
+import { OfficeMap } from '@/components/OfficeMap';
+import { Contact } from '@/components/Contact';
+import { Footer } from '@/components/Footer';
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <LanguageProvider>
+      <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+        <Navbar />
+        <Hero />
+        <PainPoints />
+        <Solutions />
+        <AITechnology />
+        <ValueProposition />
+        <SystemArchitecture />
+        <OfficeMap />
+        <Contact />
+        <Footer />
       </div>
-    </div>
+    </LanguageProvider>
   );
 };
 
