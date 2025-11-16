@@ -1,6 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { Zap, DollarSign, Target, Eye, Globe } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 const values = [
   { key: 'faster', icon: Zap, metric: '5', suffix: 'x' },
@@ -12,32 +13,22 @@ const values = [
 
 export const ValueProposition = () => {
   const { t } = useLanguage();
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
+  const [animateNumbers, setAnimateNumbers] = useState(false);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+  // Trigger number animation when visible
+  useState(() => {
+    if (isVisible && !animateNumbers) {
+      setAnimateNumbers(true);
     }
-
-    return () => observer.disconnect();
-  }, []);
+  });
 
   return (
     <section ref={sectionRef} className="py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/50 to-background" />
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-20 animate-fade-in">
+        <div className={`text-center mb-20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-5xl md:text-6xl font-bold mb-4">
             <span className="gradient-text">{t('value.title')}</span>
           </h2>
@@ -49,8 +40,10 @@ export const ValueProposition = () => {
             return (
               <div
                 key={value.key}
-                className="glass-card p-8 rounded-3xl text-center hover:scale-105 transition-all duration-500 animate-scale-in border-2 border-border/50 hover:border-primary/50 hover:glow-orange-sm"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className={`glass-card p-8 rounded-3xl text-center hover:scale-105 transition-all duration-700 border-2 border-border/50 hover:border-primary/50 hover:glow-orange-sm ${
+                  isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+                }`}
+                style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
               >
                 <div className="mb-6 inline-flex p-4 rounded-2xl gradient-orange glow-orange-sm">
                   <Icon className="h-8 w-8 text-white" />

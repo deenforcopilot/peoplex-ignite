@@ -1,4 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { DollarSign, Eye, Target, Clock, PhoneOff, Briefcase, Users } from 'lucide-react';
 
 const painPoints = [
@@ -13,11 +14,12 @@ const painPoints = [
 
 export const PainPoints = () => {
   const { t } = useLanguage();
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
 
   return (
-    <section className="py-32 relative overflow-hidden">
+    <section ref={ref} className="py-32 relative overflow-hidden">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16 animate-fade-in">
+        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-5xl md:text-6xl font-bold mb-4">
             <span className="gradient-text">{t('pain.title')}</span>
           </h2>
@@ -29,8 +31,12 @@ export const PainPoints = () => {
             return (
               <div
                 key={pain.key}
-                className="glass-card p-6 rounded-3xl hover:scale-105 transition-all duration-300 animate-fade-in-up group hover:glow-orange-sm"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className={`glass-card p-6 rounded-3xl hover:scale-105 transition-all duration-500 group hover:glow-orange-sm ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+                style={{ 
+                  transitionDelay: isVisible ? `${index * 100}ms` : '0ms'
+                }}
               >
                 <div className="mb-4 inline-flex p-3 rounded-2xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
                   <Icon className="h-6 w-6 text-primary" />

@@ -1,4 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { Brain, Workflow, Store, BarChart3 } from 'lucide-react';
 
 const solutions = [
@@ -10,11 +11,12 @@ const solutions = [
 
 export const Solutions = () => {
   const { t } = useLanguage();
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
 
   return (
-    <section id="solutions" className="py-32 relative">
+    <section id="solutions" ref={ref} className="py-32 relative">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16 animate-fade-in">
+        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-5xl md:text-6xl font-bold mb-4">
             <span className="gradient-text">{t('solutions.title')}</span>
           </h2>
@@ -26,8 +28,12 @@ export const Solutions = () => {
             return (
               <div
                 key={solution.key}
-                className="glass-card p-8 rounded-3xl hover:scale-[1.02] transition-all duration-500 animate-fade-in-up group border-2 border-border/50 hover:border-primary/50"
-                style={{ animationDelay: `${index * 150}ms` }}
+                className={`glass-card p-8 rounded-3xl hover:scale-[1.02] transition-all duration-700 group border-2 border-border/50 hover:border-primary/50 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+                style={{ 
+                  transitionDelay: isVisible ? `${index * 150}ms` : '0ms'
+                }}
               >
                 <div className="mb-6 inline-flex p-4 rounded-2xl gradient-orange glow-orange-sm">
                   <Icon className="h-8 w-8 text-white" />

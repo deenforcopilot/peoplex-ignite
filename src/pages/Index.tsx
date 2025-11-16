@@ -1,4 +1,5 @@
 import { LanguageProvider } from '@/contexts/LanguageContext';
+import { ThemeProvider } from 'next-themes';
 import { Navbar } from '@/components/Navbar';
 import { Hero } from '@/components/Hero';
 import { PainPoints } from '@/components/PainPoints';
@@ -12,20 +13,22 @@ import { Footer } from '@/components/Footer';
 
 const Index = () => {
   return (
-    <LanguageProvider>
-      <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-        <Navbar />
-        <Hero />
-        <PainPoints />
-        <Solutions />
-        <AITechnology />
-        <ValueProposition />
-        <SystemArchitecture />
-        <OfficeMap />
-        <Contact />
-        <Footer />
-      </div>
-    </LanguageProvider>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+      <LanguageProvider>
+        <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+          <Navbar />
+          <Hero />
+          <PainPoints />
+          <Solutions />
+          <AITechnology />
+          <ValueProposition />
+          <SystemArchitecture />
+          <OfficeMap />
+          <Contact />
+          <Footer />
+        </div>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 };
 

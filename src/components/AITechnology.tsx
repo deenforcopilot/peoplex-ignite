@@ -1,4 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { Cpu, Database, Users, MessageSquare, TrendingUp } from 'lucide-react';
 
 const technologies = [
@@ -11,9 +12,10 @@ const technologies = [
 
 export const AITechnology = () => {
   const { t } = useLanguage();
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
 
   return (
-    <section id="technology" className="py-32 relative overflow-hidden">
+    <section id="technology" ref={ref} className="py-32 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary rounded-full blur-[150px]" />
@@ -21,7 +23,7 @@ export const AITechnology = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-20 animate-fade-in">
+        <div className={`text-center mb-20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-5xl md:text-6xl font-bold mb-4">
             <span className="gradient-text">{t('tech.title')}</span>
           </h2>
@@ -34,8 +36,10 @@ export const AITechnology = () => {
             return (
               <div
                 key={tech.key}
-                className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 items-center animate-fade-in-up`}
-                style={{ animationDelay: `${index * 100}ms` }}
+                className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 items-center transition-all duration-700 ${
+                  isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${isEven ? '-translate-x-10' : 'translate-x-10'}`
+                }`}
+                style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
               >
                 <div className="flex-1 glass-card p-8 rounded-3xl border-2 border-border/50 hover:border-primary/50 transition-all">
                   <div className="flex items-start gap-4">
