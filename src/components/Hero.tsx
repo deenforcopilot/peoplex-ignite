@@ -1,9 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export const Hero = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
@@ -47,12 +47,17 @@ export const Hero = () => {
             </Button>
           </div>
 
-          {/* Tech Indicators */}
-          <div className="flex justify-center gap-12 pt-12 animate-fade-in animation-delay-800">
-            {['AI', 'Cloud', 'Analytics', 'Real-time'].map((tech, i) => (
-              <div key={tech} className="flex flex-col items-center gap-2 animate-float" style={{ animationDelay: `${i * 200}ms` }}>
-                <div className="w-2 h-2 rounded-full bg-primary glow-orange-sm" />
-                <span className="text-sm text-muted-foreground">{tech}</span>
+          {/* Benefits */}
+          <div className="flex flex-wrap justify-center gap-6 pt-12 animate-fade-in animation-delay-800">
+            {[
+              { key: language === 'en' ? 'Save 40% Cost' : 'ลดต้นทุน 40%' },
+              { key: language === 'en' ? '3-5x Faster' : 'เร็วกว่า 3-5 เท่า' },
+              { key: language === 'en' ? 'AI-Powered' : 'ขับเคลื่อนด้วย AI' },
+              { key: language === 'en' ? 'Full Transparency' : 'โปร่งใสเต็มที่' }
+            ].map((benefit, i) => (
+              <div key={benefit.key} className="flex items-center gap-2 glass-card px-4 py-2 rounded-full animate-float" style={{ animationDelay: `${i * 200}ms` }}>
+                <CheckCircle2 className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium">{benefit.key}</span>
               </div>
             ))}
           </div>

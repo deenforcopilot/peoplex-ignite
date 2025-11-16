@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { Globe } from 'lucide-react';
 
 export const Navbar = () => {
@@ -58,16 +59,19 @@ export const Navbar = () => {
           </a>
         </div>
 
-        {/* Language Toggle */}
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={toggleLanguage}
-          className="gap-2 glass-card border-border/50 hover:border-primary transition-all"
-        >
-          <Globe className="h-4 w-4" />
-          <span>{language === 'en' ? 'TH' : 'EN'}</span>
-        </Button>
+        {/* Theme & Language Toggle */}
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={toggleLanguage}
+            className="gap-2 glass-card border-border/50 hover:border-primary transition-all"
+          >
+            <Globe className="h-4 w-4" />
+            <span>{language === 'en' ? 'TH' : 'EN'}</span>
+          </Button>
+        </div>
       </div>
     </nav>
   );
